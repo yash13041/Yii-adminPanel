@@ -1,0 +1,8 @@
+yii_adminpanel_nisl
+
+change's in database users 
+=> signup_key =>  default value => null 
+=> last_ip => default value => null
+=> last_login => default value => null
+=> last_password_change => default value => null
+=> new_pass_key => default value => null
