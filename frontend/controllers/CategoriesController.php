@@ -6,8 +6,8 @@ use frontend\models\Categories;
 use yii;
 use yii\web\controller;
 use yii\filters\AccessControl;
-use yii\web\Response;
-use yii\widgets\ActiveForm;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;;
 
 
 
@@ -74,8 +74,6 @@ class CategoriesController extends Controller
         }
     }
 
-    // CategoriesController.php
-
     public function actionDeleteSelected()
     {
         $selectedIds  = Yii::$app->request->post('ids');
@@ -91,4 +89,81 @@ class CategoriesController extends Controller
 
         echo json_encode(['success' => false, 'message' => 'Error deleting categories']);
     }
+
+    public function actionUpdate_status()
+    {
+        $category_id = Yii::$app->request->post('category_id');
+        $is_active = Yii::$app->request->post('is_active');
+        $data = [
+            'is_active' => $is_active,
+            'updated' => date('Y-m-d H:i:s')
+        ];
+        // var_dump($data);
+        // die;
+        $update = Yii::$app->db->createCommand()
+            ->update('categories', ['is_active' => $is_active, 'updated' => date('Y-m-d H:i:s')], ['id' => $category_id])
+            ->execute();
+        if ($update) {
+            $is_active = Yii::$app->request->post('is_active');
+
+            if ($is_active == 1) {
+                echo "true";
+            } else {
+                echo "false";
+            }
+        }
+    }
+
+    public function actionEdit($id)
+    {
+        $this->layout = 'admin';
+        $category = $this->findModel($id);
+
+        if ($category->load(Yii::$app->request->post()) && $category->save()) {
+            Yii::$app->session->setFlash('success', 'Category updated successfully.');
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('edit', [
+            'category' => $category,
+            'title' => 'Edit Category',
+        ]);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Categories::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionDelete()
+{
+    $category_id = Yii::$app->request->post('category_id');
+    $category = Categories::findOne($category_id);
+
+    if ($category) {
+        try {
+            $transaction = Yii::$app->db->beginTransaction();
+
+            // Perform the deletion
+            if ($category->delete() === false) {
+                throw new \Exception('Error deleting category.');
+            }
+
+            $transaction->commit();
+
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['success' => true];
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+        }
+    }
+
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    return ['success' => false, 'error' => 'Category not found or error occurred.'];
+}
+
 }

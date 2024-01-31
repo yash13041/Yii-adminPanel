@@ -1,6 +1,7 @@
 <?php
 
 namespace frontend\models;
+
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 
@@ -28,7 +29,11 @@ class Categories extends ActiveRecord
      * @inheritdoc
      */
     public function rules()
-    {}
-
+    {
+        return [
+            [['name'], 'required'],
+            [['name'], 'string', 'max' => 255],
+            [['is_active'], 'boolean'],
+        ];
+    }
 }
-

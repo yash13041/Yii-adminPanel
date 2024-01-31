@@ -30,7 +30,7 @@
         </div>
 
         <div class="panel-body table-responsive">
-            <table id="categpries_table" class="table table-bordered table-striped">
+            <table id="categories_table" class="table table-bordered table-striped">
                 <thead>
                     <tr>
 
@@ -53,7 +53,7 @@
                             <td><?= ucfirst($category->name); ?></td>
                             <?php
                             $readonly_status = '';
-                            $readonly_status = "readonly";
+                            // $readonly_status = "readonly";
                             ?>
                             <td class="text-center switchery-sm">
                                 <input type="checkbox" onchange="change_status(this)" class="switchery" id="<?= $category->id; ?>" <?php if ($category->is_active == 1) {
@@ -61,12 +61,15 @@
                                                                                                                                     } ?> <?= $readonly_status; ?>>
                             </td>
                             <td class="text-center">
-                                <a data-popup="tooltip" data-placement="top" title="<?= ('Edit'); ?>" href="<?= ('categories/edit/') . $category->id; ?>" id="<?= $category->id; ?>" class="text-info">
+                                <a data-popup="tooltip" data-placement="top" title="<?= Yii::t('app', 'Edit'); ?>" href="<?= \yii\helpers\Url::to(['admin/categories/edit', 'id' => $category->id]) ?>" id="<?= $category->id; ?>" class="text-info">
                                     <i class="icon-pencil7"></i>
                                 </a>
 
-                                <a data-popup="tooltip" data-placement="top" title="<?= ('Delete'); ?>" href="javascriptdelete_record(<?= $category->id; ?>);" class="text-danger delete" id="<?= $category->id; ?>">
+                                <!-- <a data-popup="tooltip" data-placement="top" title="<?= ('Delete'); ?>" href="javascriptdelete_record(<?= $category->id; ?>);" class="text-danger delete" id="<?= $category->id; ?>">
                                     <i class="icon-trash"></i>
+                                </a> -->
+
+                                <a data-popup="tooltip" data-placement="top" title="<?= Yii::t('app', 'Delete'); ?>" href="javascript:void(0);" onclick="delete_record(<?= $category->id; ?>);" class="text-danger"><i class="icon-trash"></i>
                                 </a>
                             </td>
                         </tr>
@@ -126,8 +129,6 @@
         $('div.dataTables_length select').addClass('datatable-select');
     });
 
-
-
     $("#categoryform").validate({
         rules: {
             name: {
@@ -146,11 +147,6 @@
     var BASE_URL = "<?= Yii::getAlias('@web'); ?>";
 
 
-    /**
-     * Change status when clicked on the status switch
-     *
-     * @param {obj}  obj  The object
-     */
     function change_status(obj) {
         var checked = 0;
 
@@ -159,64 +155,66 @@
         }
 
         $.ajax({
-            url: BASE_URL + 'admin/categories/update_status',
+            url: '<?= Yii::$app->urlManager->createUrl(['admin/categories/update_status']) ?>',
             type: 'POST',
             data: {
+                <?= Yii::$app->request->csrfParam; ?>: '<?= Yii::$app->request->csrfToken; ?>',
                 category_id: obj.id,
                 is_active: checked
             },
             success: function(msg) {
+                console.log(msg);
                 if (msg == 'true') {
-                    jGrowlAlert("<?= (' activated' . ('category')); ?>", 'success');
+                    jGrowlAlert("<?= Yii::t('app', 'Activated Category') ?>", 'success');
                 } else {
-                    jGrowlAlert("<?= (' deactivated' . ('category')); ?>", 'success');
+                    jGrowlAlert("<?= Yii::t('app', 'deactivated category') ?>", 'success');
                 }
             }
         });
     }
 
-    /**
-     * Deletes a single record when clicked on delete icon
-     *
-     * @param {int}  id  The identifier
-     */
     function delete_record(id) {
         swal({
-                title: "<?= ('single deletion alert'); ?>",
-                text: "<?= ('single recovery alert'); ?>",
+                title: "<?= Yii::t('app', 'single deletion alert'); ?>",
+                text: "<?= Yii::t('app', 'single recovery alert'); ?>",
                 type: "warning",
                 showCancelButton: true,
-                cancelButtonText: "<?= ('no cancel it'); ?>",
-                confirmButtonText: "<?= ('yes i am sure'); ?>",
+                cancelButtonText: "<?= Yii::t('app', 'no cancel it'); ?>",
+                confirmButtonText: "<?= Yii::t('app', 'yes i am sure'); ?>",
             },
             function() {
                 $.ajax({
-                    url: BASE_URL + 'admin/categories/delete',
+                    url: '<?= Yii::$app->urlManager->createUrl(['admin/categories/delete']) ?>',
                     type: 'POST',
                     data: {
+                        <?= Yii::$app->request->csrfParam; ?>: '<?= Yii::$app->request->csrfToken; ?>',
                         category_id: id
                     },
-                    success: function(msg) {
-                        if (msg == "true") {
+                    success: function(data) {
+                        console.log(data);
+                        if (data.success) {
                             swal({
-                                title: "<?= (' deleted successfully' . ('category')); ?>",
+                                title: "<?= Yii::t('app', 'deleted successfully')?>",
                                 type: "success",
                             });
                             $("#" + id).closest("tr").remove();
                         } else {
                             swal({
-                                title: "<?= ('access_denied' . ('category')); ?>",
+                                title: "<?= Yii::t('app', 'accedd denied ')?>",
                                 type: "error",
                             });
                         }
+                    },
+                    error: function() {
+                        swal({
+                            title: "<?= Yii::t('app', 'Error occurred during the deletion')?>",
+                            type: "error",
+                        });
                     }
                 });
             });
     }
 
-    /**
-     * Deletes all the selected records when clicked on DELETE SELECTED button
-     */
     function delete_selected() {
         console.log("Delete selected function called");
 

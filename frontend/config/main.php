@@ -54,6 +54,9 @@ return [
                 'admin/categories' => 'categories/index',
                 'admin/categories/add' => 'categories/add',
                 'categories/delete-selected' => 'categories/delete-selected',
+                'admin/categories/update_status' => 'categories/update_status',
+                'admin/categories/edit' => 'categories/edit',
+                'admin/categories/delete' => 'categories/delete'
             ],
         ],
 
