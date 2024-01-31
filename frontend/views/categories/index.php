@@ -10,9 +10,9 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li>
-                <a href="<?= ('dashboard'); ?>"><i class="icon-home2 position-left"></i><?= ('dashboard'); ?></a>
+                <a href="<?= ('Dashboard'); ?>"><i class="icon-home2 position-left"></i><?= ('dashboard'); ?></a>
             </li>
-            <li class="active"><?= ('categories'); ?></li>
+            <li class="active"><?= ('Categories'); ?></li>
         </ul>
     </div>
 </div>
@@ -37,10 +37,10 @@
                         <th width="2%">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this)">
                         </th>
-                        <th width="82%"><?= ('name'); ?></th>
-                        <th width="8%" class="text-center"><?= ('status'); ?></th>
+                        <th width="82%"><?= ('Name'); ?></th>
+                        <th width="8%" class="text-center"><?= ('Status'); ?></th>
 
-                        <th width="8%" class="text-center"><?= ('actions'); ?></th>
+                        <th width="8%" class="text-center"><?= ('Actions'); ?></th>
 
                     </tr>
                 </thead>
@@ -64,10 +64,6 @@
                                 <a data-popup="tooltip" data-placement="top" title="<?= Yii::t('app', 'Edit'); ?>" href="<?= \yii\helpers\Url::to(['admin/categories/edit', 'id' => $category->id]) ?>" id="<?= $category->id; ?>" class="text-info">
                                     <i class="icon-pencil7"></i>
                                 </a>
-
-                                <!-- <a data-popup="tooltip" data-placement="top" title="<?= ('Delete'); ?>" href="javascriptdelete_record(<?= $category->id; ?>);" class="text-danger delete" id="<?= $category->id; ?>">
-                                    <i class="icon-trash"></i>
-                                </a> -->
 
                                 <a data-popup="tooltip" data-placement="top" title="<?= Yii::t('app', 'Delete'); ?>" href="javascript:void(0);" onclick="delete_record(<?= $category->id; ?>);" class="text-danger"><i class="icon-trash"></i>
                                 </a>

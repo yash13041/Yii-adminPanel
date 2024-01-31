@@ -56,7 +56,23 @@ return [
                 'categories/delete-selected' => 'categories/delete-selected',
                 'admin/categories/update_status' => 'categories/update_status',
                 'admin/categories/edit' => 'categories/edit',
-                'admin/categories/delete' => 'categories/delete'
+                'admin/categories/delete' => 'categories/delete',
+
+                // projects url
+                'admin/projects' => 'projects/index',
+                'admin/projects/add' => 'projects/add',
+                'projects/delete-selected' => 'projects/delete-selected',
+                'admin/projects/update_status' => 'projects/update_status',
+                'admin/projects/edit' => 'projects/edit',
+                'admin/projects/delete' => 'projects/delete',
+
+                //subjects url
+                'admin/subjects' => 'subjects/index',
+                'admin/subjects/add' => 'subjects/add',
+                'subjects/delete-selected' => 'subjects/delete-selected',
+                'admin/subjects/update_status' => 'subjects/update_status',
+                'admin/subjects/edit' => 'subjects/edit',
+                'admin/subjects/delete' => 'subjects/delete',
             ],
         ],
 

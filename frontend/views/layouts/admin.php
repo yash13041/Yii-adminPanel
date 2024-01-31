@@ -120,14 +120,14 @@ AuthAsset::register($this);
                                         <span> <?= ('Categories'); ?> </span>
                                     </a>
                                 </li>
-                                <li>
+                                <li <?php if(YiiHelper::isActiveController('projects')): ?> class="active" <?php endif;?>>
                                     <a href="<?= ('projects'); ?>">
                                         <i class="icon-menu3">
                                         </i>
                                         <span> <?= ('Projects'); ?> </span>
                                     </a>
                                 </li>
-                                <li>
+                                <li <?php if(YiiHelper::isActiveController('subjects')): ?> class="active" <?php endif;?>>
                                     <a href="<?= ('subjects'); ?>">
                                         <i class="icon-menu2">
                                         </i>
