@@ -73,6 +73,14 @@ return [
                 'admin/subjects/update_status' => 'subjects/update_status',
                 'admin/subjects/edit' => 'subjects/edit',
                 'admin/subjects/delete' => 'subjects/delete',
+
+                // Users url
+                'admin/users' => 'users/index',
+                'admin/users/add' => 'users/add',
+                'users/delete-selected' => 'users/delete-selected',
+                'admin/users/update_status' => 'users/update_status',
+                'admin/users/edit' => 'users/edit',
+                'admin/users/delete' => 'users/delete',
             ],
         ],
 

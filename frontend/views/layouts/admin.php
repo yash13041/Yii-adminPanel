@@ -134,7 +134,7 @@ AuthAsset::register($this);
                                         <span> <?= ('Subjects'); ?> </span>
                                     </a>
                                 </li>
-                                <li>
+                                <li <?php if(YiiHelper::isActiveController('users')): ?> class="active" <?php endif;?>>
                                     <a href="<?= ('users'); ?>">
                                         <i class="icon-users4">
                                         </i>

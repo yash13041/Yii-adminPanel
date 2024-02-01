@@ -10,7 +10,7 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li>
-                <a href="<?= ('Dashboard'); ?>"><i class="icon-home2 position-left"></i><?= ('dashboard'); ?></a>
+                <a href="<?= ('dashboard'); ?>"><i class="icon-home2 position-left"></i><?= ('Dashboard'); ?></a>
             </li>
             <li class="active"><?= ('Categories'); ?></li>
         </ul>
